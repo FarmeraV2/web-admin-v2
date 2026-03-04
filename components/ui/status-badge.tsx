@@ -20,8 +20,11 @@ const STATUS_MAP: Record<string, { label: string; variant: "success" | "warning"
   APPROVED: { label: "Approved", variant: "success" },
   REJECTED: { label: "Rejected", variant: "error" },
   PENDING: { label: "Pending", variant: "warning" },
+  PENDING_APPROVE: { label: "Pending Approval", variant: "warning" },
   SUSPENDED: { label: "Suspended", variant: "warning" },
-  // Certificate
+  BLOCKED: { label: "Blocked", variant: "error" },
+  UNSPECIFIED: { label: "Unspecified", variant: "neutral" },
+  // Farm / Certificate
   VERIFIED: { label: "Verified", variant: "success" },
   EXPIRED: { label: "Expired", variant: "neutral" },
   // Product

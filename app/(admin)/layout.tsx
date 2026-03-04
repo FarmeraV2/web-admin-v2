@@ -32,11 +32,6 @@ const navItems = [
     icon: <MdAgriculture className="w-5 h-5" />,
   },
   {
-    href: "/certificates",
-    label: "Certificates",
-    icon: <HiOutlineCheckBadge className="w-5 h-5" />,
-  },
-  {
     href: "/products",
     label: "Products",
     icon: <HiOutlineCube className="w-5 h-5" />,

@@ -1,25 +1,25 @@
-import { Farm } from "./farm";
+// Backend CertificateStatus enum
+export type CertificateStatus = "PENDING" | "APPROVED" | "REJECTED";
 
-export type CertificateStatus = "PENDING" | "VERIFIED" | "REJECTED" | "EXPIRED";
+// Backend CertificateType enum
 export type CertificateType =
+  | "BUSINESS_LICENSE"
+  | "FOOD_SAFETY"
+  | "VIETGAP"
+  | "GLOBALGAP"
   | "ORGANIC"
-  | "ISO"
-  | "GAP"
-  | "GLOBAL_GAP"
-  | "FSSC"
-  | "RAINFOREST"
   | "OTHER";
 
+/** Farm certificate from GET /admin/farm-management/:id/certificate */
 export interface FarmCertificate {
-  id: string;
-  farm_id: string;
-  farm?: Farm;
+  id: number;
   type: CertificateType;
-  issuer: string;
-  valid_until: string;
-  document_url: string;
+  url: string;
+  meta_data: Record<string, unknown> | null;
+  valid_until: string | null;
+  issuer: string | null;
   status: CertificateStatus;
-  reason?: string;
-  created_at: string;
-  updated_at: string;
+  is_deleted: boolean;
+  created: string;
+  farm_id: number;
 }
