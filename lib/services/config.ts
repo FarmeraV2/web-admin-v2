@@ -1,6 +1,6 @@
 import { api } from "@/lib/api";
 import { Category, Subcategory } from "@/lib/types/product";
-import { Step, StepType } from "@/lib/types/crop";
+import { Crop, CropType, PublicStep, StepType } from "@/lib/types/crop";
 import { BackendResponse, BackendPaginatedData } from "@/lib/types/api";
 
 // ─── Categories ──────────────────────────────────────────────────────────────
@@ -42,24 +42,53 @@ export function createSubcategory(body: {
   return api.post("/category/subcategory", body);
 }
 
-// ─── Crop Steps ───────────────────────────────────────────────────────────────
+// ─── Crops ────────────────────────────────────────────────────────────────────
 
-export function listSteps(): Promise<Step[]> {
-  return api.get("/step");
+export interface ListCropsParams {
+  page?: number;
+  limit?: number;
+  search?: string;
 }
 
-export function getStep(id: string): Promise<Step> {
-  return api.get(`/step/${id}`);
+export function listCrops(
+  params: ListCropsParams = {}
+): Promise<BackendResponse<BackendPaginatedData<Crop>>> {
+  const query = new URLSearchParams();
+  if (params.page) query.set("page", String(params.page));
+  if (params.limit) query.set("limit", String(params.limit));
+  if (params.search) query.set("search", params.search);
+  return api.get(`/crop-management/crop?${query}`);
+}
+
+export function createCrop(body: {
+  name: string;
+  crop_type: CropType;
+  description: string;
+  image_urls?: string[];
+}): Promise<BackendResponse<Crop>> {
+  return api.post("/crop-management/crop", body);
+}
+
+// ─── Crop Steps ───────────────────────────────────────────────────────────────
+
+export function listCropSteps(
+  cropId: number
+): Promise<BackendResponse<BackendPaginatedData<PublicStep>>> {
+  return api.get(`/crop-management/step/crop/${cropId}`);
 }
 
 export function createStep(body: {
+  crop_id: number;
   name: string;
-  type: StepType;
-  description?: string;
+  description: string;
+  notes?: string;
   order: number;
+  repeated?: boolean;
+  is_optional: boolean;
   min_logs: number;
-  is_optional?: boolean;
-  intervals?: number;
-}): Promise<Step> {
-  return api.post("/step", body);
+  type: StepType;
+  min_day_duration?: number;
+  max_day_duration?: number;
+}): Promise<BackendResponse<PublicStep>> {
+  return api.post("/crop-management", body);
 }

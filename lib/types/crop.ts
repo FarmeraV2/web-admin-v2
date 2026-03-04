@@ -1,5 +1,30 @@
-export type StepType = "PREPARATION" | "PLANTING" | "CARE" | "HARVEST" | "POST_HARVEST";
+export type CropType = "SHORT_TERM" | "LONG_TERM";
 
+export interface Crop {
+  id: number;
+  name: string;
+  crop_type: CropType;
+  image_url: string | null;
+  description: string | null;
+  max_seasons: number | null;
+}
+
+// Actual step type values from backend StepType enum
+export type StepType = "PREPARE" | "PLANTING" | "CARE" | "HARVEST" | "POST_HARVEST";
+
+// Template step (PublicStepDto from /crop-management/step/crop/:cropId)
+export interface PublicStep {
+  id: number;
+  name: string;
+  description: string;
+  order: number;
+  repeated: boolean;
+  is_optional: boolean;
+  min_logs: number;
+  type: StepType;
+}
+
+// Legacy Step type (kept for backward compat)
 export interface Step {
   id: string;
   name: string;
