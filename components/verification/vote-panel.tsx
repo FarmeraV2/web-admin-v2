@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useChainId, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { keccak256, toBytes } from "viem";
 import { submitVoteAction } from "@/app/actions/verification";
-import { AUDITOR_REGISTRY_ADDRESS, AUDITOR_REGISTRY_ABI } from "@/lib/web3/contracts";
+import { AUDITOR_REGISTRY_ADDRESSES, AUDITOR_REGISTRY_ABI } from "@/lib/web3/contracts";
 
 // keccak256(abi.encodePacked("log")) — matches the Solidity identifier
 const LOG_IDENTIFIER = keccak256(toBytes("log"));
@@ -26,6 +26,7 @@ export function VotePanel({
 }: VotePanelProps) {
   const router = useRouter();
   const { isConnected } = useAccount();
+  const chainId = useChainId();
   const [error, setError] = useState<string | null>(null);
   const [isSubmittingBackend, setIsSubmittingBackend] = useState(false);
   const [pendingVote, setPendingVote] = useState<boolean | null>(null);
@@ -68,7 +69,7 @@ export function VotePanel({
     resetWrite();
     setPendingVote(isValid);
     writeContract({
-      address: AUDITOR_REGISTRY_ADDRESS,
+      address: AUDITOR_REGISTRY_ADDRESSES[chainId],
       abi: AUDITOR_REGISTRY_ABI,
       functionName: "verify",
       args: [LOG_IDENTIFIER, BigInt(logId), isValid],
