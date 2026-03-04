@@ -22,7 +22,7 @@ Cài đặt qua nvm (khuyến nghị):
 II. CLONE VÀ CÀI ĐẶT
 ------------------------------------------------------------------------
 1. Clone repository:
-  git clone https://github.com/FarmeraV2/farmera-web-admin.git
+  git clone https://github.com/FarmeraV2/web-admin-v2.git
   cd farmera-web-admin
 
 ------------------------------------------------------------------------
