@@ -5,10 +5,11 @@ import { createCategory, createSubcategory, createStep } from "@/lib/services/co
 import { StepType } from "@/lib/types/crop";
 
 export async function createCategoryAction(
-  name: string
+  name: string,
+  description?: string
 ): Promise<{ error?: string }> {
   try {
-    await createCategory({ name });
+    await createCategory({ name, description });
     revalidatePath("/config/categories");
     return {};
   } catch (err: unknown) {
@@ -19,10 +20,11 @@ export async function createCategoryAction(
 
 export async function createSubcategoryAction(
   name: string,
-  categoryId: string
+  categoryId: number,
+  description?: string
 ): Promise<{ error?: string }> {
   try {
-    await createSubcategory({ name, category_id: categoryId });
+    await createSubcategory({ name, category_id: categoryId, description });
     revalidatePath("/config/categories");
     return {};
   } catch (err: unknown) {

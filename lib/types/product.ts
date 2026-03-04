@@ -3,15 +3,22 @@ import { Farm } from "./farm";
 export type ProductStatus = "NOT_YET_OPEN" | "OPEN" | "CLOSED" | "OUT_OF_STOCK";
 
 export interface Category {
-  id: string;
+  category_id: number;
   name: string;
+  description?: string | null;
+  image_url?: string | null;
+  created: string;
+  updated: string;
   subcategories?: Subcategory[];
 }
 
 export interface Subcategory {
-  id: string;
+  subcategory_id: number;
   name: string;
-  category_id: string;
+  description?: string | null;
+  created: string;
+  updated: string;
+  category?: Pick<Category, "category_id" | "name">;
 }
 
 export interface Product {
