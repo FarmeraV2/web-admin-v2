@@ -1,0 +1,44 @@
+================================================================================
+         HƯỚNG DẪN SỬ DỤNG - FARMERA WEB ADMIN
+================================================================================
+
+------------------------------------------------------------------------
+I. CHẠY ỨNG DỤNG
+------------------------------------------------------------------------
+1. Chế độ phát triển
+
+Lệnh:
+  npm run dev
+
+------------------------------------------------------------------------
+2. Chạy bản production
+
+Lệnh:
+  npm run build
+  npm run start
+
+------------------------------------------------------------------------
+II. BIÊN DỊCH (BUILD) ỨNG DỤNG
+------------------------------------------------------------------------
+Lệnh:
+  npm run build
+
+Kết quả:
+  - Next.js biên dịch và tối ưu toàn bộ ứng dụng.
+  - Output tại thư mục: .next/
+
+Sau khi build xong, chạy production:
+  npm run start
+
+------------------------------------------------------------------------
+III. TÀI KHOẢN VÀ PHÂN QUYỀN
+------------------------------------------------------------------------
+Web Admin hỗ trợ 2 vai trò:
+
+  ADMIN   — Quản lý toàn bộ: người dùng, trang trại, danh mục,
+            thông báo, phê duyệt hồ sơ nông trại.
+
+  AUDITOR — Chỉ xem xét và xác minh nhật ký sản xuất (crop diary).
+
+Đăng nhập tại trang chủ bằng email và mật khẩu đã được tạo trong database.
+Tài khoản FARMER / BUYER không có quyền truy cập vào admin panel.

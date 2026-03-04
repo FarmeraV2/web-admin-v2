@@ -1,0 +1,51 @@
+================================================================================
+         HƯỚNG DẪN CÀI ĐẶT - FARMERA WEB ADMIN
+================================================================================
+
+------------------------------------------------------------------------
+I. CÔNG CỤ VÀ MÔI TRƯỜNG PHÁT TRIỂN CẦN CÀI ĐẶT
+------------------------------------------------------------------------
+1. Node.js (v20 LTS trở lên)
+
+Tải về tại: https://nodejs.org/
+
+Kiểm tra cài đặt:
+  node --version    (kết quả mẫu: v20.x.x)
+  npm --version     (kết quả mẫu: 10.x.x)
+
+Cài đặt qua nvm (khuyến nghị):
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+  nvm install 20
+  nvm use 20
+
+------------------------------------------------------------------------
+II. CLONE VÀ CÀI ĐẶT
+------------------------------------------------------------------------
+1. Clone repository:
+  git clone https://github.com/FarmeraV2/farmera-web-admin.git
+  cd farmera-web-admin
+
+------------------------------------------------------------------------
+2. Cài đặt các thư viện Node.js:
+  npm install
+
+------------------------------------------------------------------------
+3. Cấu hình biến môi trường:
+  Sao chép file môi trường mẫu:
+    cp .env.example .env.local
+
+  Mở file .env.local và điền các giá trị thực tế:
+
+------------------------------------------------------------------------
+III. KIỂM TRA CÀI ĐẶT
+------------------------------------------------------------------------
+Sau khi hoàn tất các bước trên, chạy lệnh:
+  npm run dev
+
+Nếu ứng dụng khởi động thành công, terminal sẽ hiển thị:
+  ▲ Next.js 16.x.x
+  - Local: http://localhost:3000
+
+Truy cập http://localhost:3000 để mở giao diện quản trị.
+
+Đăng nhập bằng tài khoản ADMIN hoặc AUDITOR đã có trong database.
