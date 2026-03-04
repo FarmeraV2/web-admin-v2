@@ -1,20 +1,20 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { submitVerificationVote } from "@/lib/services/verification";
+import { submitVote } from "@/lib/services/verification";
 
-export async function submitVerificationAction(
-  requestId: string,
-  vote: "APPROVED" | "REJECTED",
-  reason?: string
+export async function submitVoteAction(
+  requestId: number,
+  transactionHash: string
 ): Promise<{ error?: string }> {
   try {
-    await submitVerificationVote({ requestId, vote, reason });
+    await submitVote(requestId, transactionHash);
     revalidatePath(`/verification/${requestId}`);
     revalidatePath("/verification");
     return {};
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Failed to submit verification vote.";
+    const message =
+      err instanceof Error ? err.message : "Failed to submit vote.";
     return { error: message };
   }
 }

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { updateUserStatus } from "@/lib/services/users";
-import { UserStatus } from "@/lib/types/user";
+import { UserStatus } from "@/lib/types/auth";
 
 export async function updateUserStatusAction(
   userId: string,

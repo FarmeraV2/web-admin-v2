@@ -1,26 +1,57 @@
 import { api } from "@/lib/api";
-import { VerificationRequest } from "@/lib/types/crop";
+import {
+  VerificationAssignment,
+  VerificationPackage,
+  OnChainVote,
+  OnChainDeadline,
+} from "@/lib/types/crop";
+import {
+  BackendResponse,
+  BackendPaginatedData,
+} from "@/lib/types/api";
 
-export function listPendingVerifications(): Promise<VerificationRequest[]> {
-  return api.get("/crop-management/verification/pending");
+export type VerificationStatusFilter = "pending" | "voted";
+
+export interface ListVerificationsParams {
+  page?: number;
+  limit?: number;
+  status?: VerificationStatusFilter;
 }
 
-export function getVerificationPackage(requestId: string): Promise<VerificationRequest> {
+export function listVerifications(
+  params: ListVerificationsParams = {}
+): Promise<BackendResponse<BackendPaginatedData<VerificationAssignment>>> {
+  const q = new URLSearchParams();
+  if (params.page) q.set("page", String(params.page));
+  if (params.limit) q.set("limit", String(params.limit));
+  if (params.status) q.set("status", params.status);
+  return api.get(`/crop-management/verification?${q}`);
+}
+
+export function getVerificationPackage(
+  requestId: number | string
+): Promise<BackendResponse<VerificationPackage>> {
   return api.get(`/crop-management/verification/${requestId}/package`);
 }
 
-export function getOnChainVerificationState(requestId: string): Promise<unknown> {
-  return api.get(`/on-chain/auditor-registry/verification?requestId=${requestId}`);
+/** Record that the auditor voted on-chain by submitting the transaction hash. */
+export function submitVote(
+  requestId: number | string,
+  transaction_hash: string
+): Promise<BackendResponse<boolean>> {
+  return api.patch(`/crop-management/verification/${requestId}`, { transaction_hash });
 }
 
-export function getVerificationDeadline(requestId: string): Promise<unknown> {
-  return api.get(`/on-chain/auditor-registry/verification/deadline?requestId=${requestId}`);
-}
+// /** On-chain votes for a log (id = log.id, identifier = "log") */
+// export function getOnChainVotes(
+//   logId: number | string
+// ): Promise<BackendResponse<OnChainVote[]>> {
+//   return api.get(`/on-chain/auditor-registry/verification?id=${logId}&identifier=log`);
+// }
 
-export function submitVerificationVote(body: {
-  requestId: string;
-  vote: "APPROVED" | "REJECTED";
-  reason?: string;
-}): Promise<void> {
-  return api.post("/crop-management/verification/vote", body);
+/** On-chain deadline for a log */
+export function getOnChainDeadline(
+  logId: number | string
+): Promise<BackendResponse<OnChainDeadline>> {
+  return api.get(`/on-chain/auditor-registry/verification/deadline?id=${logId}&identifier=log`);
 }

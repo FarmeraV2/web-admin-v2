@@ -4,12 +4,15 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { logoutAction } from "@/app/actions/auth";
 import { HiOutlineClipboardDocumentCheck, HiArrowRightOnRectangle } from "react-icons/hi2";
+import { Web3Provider } from "@/components/providers/web3-provider";
+import { WalletButton } from "@/components/web3/wallet-button";
 
 export default async function AuditorLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();
   if (!session.accessToken) redirect("/login");
 
   return (
+    <Web3Provider>
     <div className="flex h-screen bg-gray-50">
       {/* Slim sidebar */}
       <aside className="w-56 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col">
@@ -41,6 +44,10 @@ export default async function AuditorLayout({ children }: { children: React.Reac
 
         {/* User footer */}
         <div className="border-t border-gray-200 p-3">
+          {/* Wallet connect */}
+          <div className="mb-3 flex justify-center">
+            <WalletButton />
+          </div>
           <div className="flex items-center gap-2.5 px-2 py-1.5 mb-1">
             <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 text-xs font-semibold flex-shrink-0">
               {session.email?.[0]?.toUpperCase() ?? "A"}
@@ -69,5 +76,6 @@ export default async function AuditorLayout({ children }: { children: React.Reac
         </div>
       </main>
     </div>
+    </Web3Provider>
   );
 }

@@ -1,5 +1,6 @@
 import { api } from "@/lib/api";
-import { User, UserRole, UserStatus } from "@/lib/types/user";
+import { User } from "@/lib/types/user";
+import { UserRole, UserStatus } from "@/lib/types/auth";
 import { PaginatedResponse } from "@/lib/types/api";
 
 export interface ListUsersParams {
